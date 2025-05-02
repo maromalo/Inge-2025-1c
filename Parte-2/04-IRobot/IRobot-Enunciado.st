@@ -724,16 +724,15 @@ cashier: aCashier evaluationOf: aRobot
 
 	^self subclassResponsibility! !
 
-!RobotCashierBehavior class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:07:48'!
+!RobotCashierBehavior class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:45:23'!
 closeOrderBy: aRobot using: aCashier
 	
-	^ self subclassResponsibility.
-! !
+	^aCashier receiveOrder: aRobot.! !
 
-!RobotCashierBehavior class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:07:45'!
+!RobotCashierBehavior class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:46:08'!
 take: aProduct with: aTrailer
 
-	^ self subclassResponsibility.! !
+	 ^aTrailer carry: aProduct.! !
 
 
 !classDefinition: #RobotMechanicalFailure category: #'IRobot-Enunciado'!
@@ -760,17 +759,6 @@ cashier: aCashier evaluationOf: aRobot
 		"Comentario: en este punto el cashier realizaría el checkout de los productos."
 
 	^ true.! !
-
-!RobotMechanicalFailure class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:06'!
-closeOrderBy: aRobot using: aCashier
-	
-	^aCashier receiveOrder: aRobot.
-! !
-
-!RobotMechanicalFailure class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:04'!
-take: aProduct with: aTrailer
-
-	 ^aTrailer carry: aProduct.! !
 
 
 !classDefinition: #RobotOutOfOrder category: #'IRobot-Enunciado'!
@@ -815,17 +803,6 @@ cashier: aCashier evaluationOf: aRobot
 	aRobot outOfOrder.
 	aCashier signalRobotSensorsFailure.! !
 
-!RobotSensorsFailure class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:29'!
-closeOrderBy: aRobot using: aCashier
-	
-	^ aCashier receiveOrder: aRobot.
-! !
-
-!RobotSensorsFailure class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:32'!
-take: aProduct with: aTrailer
-
-	 ^aTrailer carry: aProduct.! !
-
 
 !classDefinition: #RobotWorkingNormal category: #'IRobot-Enunciado'!
 RobotCashierBehavior subclass: #RobotWorkingNormal
@@ -850,17 +827,6 @@ cashier: aCashier evaluationOf: aRobot
 		
 	^ true! !
 
-!RobotWorkingNormal class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:38'!
-closeOrderBy: aRobot using: aCashier
-	
-	^ aCashier receiveOrder: aRobot.
-! !
-
-!RobotWorkingNormal class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:42'!
-take: aProduct with: aTrailer
-
-	 ^aTrailer carry: aProduct.! !
-
 
 !classDefinition: #Trailer category: #'IRobot-Enunciado'!
 Object subclass: #Trailer
@@ -883,37 +849,15 @@ totalProductsAmount
 	
 	^ container size.! !
 
-!Trailer methodsFor: 'accessing' stamp: 'F 5/14/2020 10:35:03'!
+!Trailer methodsFor: 'accessing' stamp: 'MARO 5/2/2025 15:13:09'!
 totalProductsHeight
 	"Solo importa la altura de los productos apilables"
+	^(container select: [:product | product isStackable]	) sum: [:product | product height] ifEmpty: 0! !
 
-	| total index |
-
-	total := 0.
-	index := 1.
-	
-	[index <= container size] whileTrue: [ | product |
-		product := (container at: index).
-		(product isStackable) ifTrue: [ total := total +  product height ].
-		index := index + 1.	
-	].
-
-	^ total.! !
-
-!Trailer methodsFor: 'accessing' stamp: 'F 5/14/2020 10:34:38'!
+!Trailer methodsFor: 'accessing' stamp: 'MARO 5/2/2025 15:04:20'!
 totalProductsWeight
 	
-	| total index |
-
-	total := 0.
-	index := 1.
-	
-	[index <= container size] whileTrue: [
-		total := total + (container at: index) weight.
-		index := index + 1.	
-	].
-
-	^ total.! !
+	^container sum: [:product | product weight] ifEmpty: 0.! !
 
 
 !Trailer methodsFor: 'testing' stamp: 'FRT 5/3/2020 23:33:33'!
