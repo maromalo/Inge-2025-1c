@@ -626,22 +626,22 @@ take: aProduct
 	status take: aProduct with: trailer.! !
 
 
-!Robot methodsFor: 'status' stamp: 'MARO 5/2/2025 12:39:38'!
+!Robot methodsFor: 'status' stamp: 'MARO 5/2/2025 14:42:24'!
 outOfOrder
 
-	status := OutOfOrder new.
+	status := RobotOutOfOrder.
 ! !
 
-!Robot methodsFor: 'status' stamp: 'MARO 5/2/2025 12:37:49'!
+!Robot methodsFor: 'status' stamp: 'MARO 5/2/2025 14:42:14'!
 withMechanicalFailure
 
-	status := MechanicalFailure new.
+	status := RobotMechanicalFailure.
 ! !
 
-!Robot methodsFor: 'status' stamp: 'MARO 5/2/2025 12:39:46'!
+!Robot methodsFor: 'status' stamp: 'MARO 5/2/2025 14:42:39'!
 withSensorsFailure
 
-	status := SensorsFailure new.
+	status := RobotSensorsFailure.
 ! !
 
 
@@ -658,10 +658,10 @@ trailer
 ! !
 
 
-!Robot methodsFor: 'initialization' stamp: 'MARO 5/2/2025 12:39:52'!
+!Robot methodsFor: 'initialization' stamp: 'MARO 5/2/2025 14:42:49'!
 initializeWith: aTrailer
 
-	status := WorkingNormal new.
+	status := RobotWorkingNormal.
 	trailer := aTrailer.
 ! !
 
@@ -713,31 +713,43 @@ Object subclass: #RobotCashierBehavior
 	poolDictionaries: ''
 	category: 'IRobot-Enunciado'!
 
-!RobotCashierBehavior methodsFor: 'actions' stamp: 'MARO 5/2/2025 13:30:58'!
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'RobotCashierBehavior class' category: #'IRobot-Enunciado'!
+RobotCashierBehavior class
+	instanceVariableNames: ''!
+
+!RobotCashierBehavior class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:07:51'!
 cashier: aCashier evaluationOf: aRobot
 
 	^self subclassResponsibility! !
 
-!RobotCashierBehavior methodsFor: 'actions' stamp: 'MARO 5/2/2025 12:47:43'!
+!RobotCashierBehavior class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:07:48'!
 closeOrderBy: aRobot using: aCashier
 	
 	^ self subclassResponsibility.
 ! !
 
-!RobotCashierBehavior methodsFor: 'actions' stamp: 'MARO 5/2/2025 13:05:59'!
+!RobotCashierBehavior class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:07:45'!
 take: aProduct with: aTrailer
 
 	^ self subclassResponsibility.! !
 
 
-!classDefinition: #MechanicalFailure category: #'IRobot-Enunciado'!
-RobotCashierBehavior subclass: #MechanicalFailure
+!classDefinition: #RobotMechanicalFailure category: #'IRobot-Enunciado'!
+RobotCashierBehavior subclass: #RobotMechanicalFailure
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'IRobot-Enunciado'!
 
-!MechanicalFailure methodsFor: 'actions' stamp: 'MARO 5/2/2025 13:28:49'!
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'RobotMechanicalFailure class' category: #'IRobot-Enunciado'!
+RobotMechanicalFailure class
+	instanceVariableNames: ''!
+
+!RobotMechanicalFailure class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:10'!
 cashier: aCashier evaluationOf: aRobot
 	| aTrailer |
 	aRobot outOfOrder.
@@ -749,68 +761,86 @@ cashier: aCashier evaluationOf: aRobot
 
 	^ true.! !
 
-!MechanicalFailure methodsFor: 'actions' stamp: 'MARO 5/2/2025 12:53:17'!
+!RobotMechanicalFailure class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:06'!
 closeOrderBy: aRobot using: aCashier
 	
 	^aCashier receiveOrder: aRobot.
 ! !
 
-!MechanicalFailure methodsFor: 'actions' stamp: 'MARO 5/2/2025 13:32:03'!
+!RobotMechanicalFailure class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:04'!
 take: aProduct with: aTrailer
 
 	 ^aTrailer carry: aProduct.! !
 
 
-!classDefinition: #OutOfOrder category: #'IRobot-Enunciado'!
-RobotCashierBehavior subclass: #OutOfOrder
+!classDefinition: #RobotOutOfOrder category: #'IRobot-Enunciado'!
+RobotCashierBehavior subclass: #RobotOutOfOrder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'IRobot-Enunciado'!
 
-!OutOfOrder methodsFor: 'actions' stamp: 'MARO 5/2/2025 13:53:37'!
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'RobotOutOfOrder class' category: #'IRobot-Enunciado'!
+RobotOutOfOrder class
+	instanceVariableNames: ''!
+
+!RobotOutOfOrder class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:16'!
 closeOrderBy: aRobot using: aCashier
 
 	^ Robot signalOutOfOrder! !
 
-!OutOfOrder methodsFor: 'actions' stamp: 'MARO 5/2/2025 13:40:00'!
+!RobotOutOfOrder class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:19'!
 take: aProduct with: aTrailer
 	^ Robot signalOutOfOrder.! !
 
 
-!classDefinition: #SensorsFailure category: #'IRobot-Enunciado'!
-RobotCashierBehavior subclass: #SensorsFailure
+!classDefinition: #RobotSensorsFailure category: #'IRobot-Enunciado'!
+RobotCashierBehavior subclass: #RobotSensorsFailure
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'IRobot-Enunciado'!
 
-!SensorsFailure methodsFor: 'actions' stamp: 'MARO 5/2/2025 13:25:53'!
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'RobotSensorsFailure class' category: #'IRobot-Enunciado'!
+RobotSensorsFailure class
+	instanceVariableNames: ''!
+
+!RobotSensorsFailure class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:24'!
 cashier: aCashier evaluationOf: aRobot
 
 	aRobot outOfOrder.
 	aCashier signalRobotSensorsFailure.! !
 
-!SensorsFailure methodsFor: 'actions' stamp: 'MARO 5/2/2025 12:53:25'!
+!RobotSensorsFailure class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:29'!
 closeOrderBy: aRobot using: aCashier
 	
 	^ aCashier receiveOrder: aRobot.
 ! !
 
-!SensorsFailure methodsFor: 'actions' stamp: 'MARO 5/2/2025 12:50:22'!
+!RobotSensorsFailure class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:32'!
 take: aProduct with: aTrailer
 
 	 ^aTrailer carry: aProduct.! !
 
 
-!classDefinition: #WorkingNormal category: #'IRobot-Enunciado'!
-RobotCashierBehavior subclass: #WorkingNormal
+!classDefinition: #RobotWorkingNormal category: #'IRobot-Enunciado'!
+RobotCashierBehavior subclass: #RobotWorkingNormal
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'IRobot-Enunciado'!
 
-!WorkingNormal methodsFor: 'actions' stamp: 'MARO 5/2/2025 13:23:56'!
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'RobotWorkingNormal class' category: #'IRobot-Enunciado'!
+RobotWorkingNormal class
+	instanceVariableNames: ''!
+
+!RobotWorkingNormal class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:36'!
 cashier: aCashier evaluationOf: aRobot
 	|aTrailer|
 	aTrailer := aRobot trailer.	
@@ -820,13 +850,13 @@ cashier: aCashier evaluationOf: aRobot
 		
 	^ true! !
 
-!WorkingNormal methodsFor: 'actions' stamp: 'MARO 5/2/2025 12:53:31'!
+!RobotWorkingNormal class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:38'!
 closeOrderBy: aRobot using: aCashier
 	
 	^ aCashier receiveOrder: aRobot.
 ! !
 
-!WorkingNormal methodsFor: 'actions' stamp: 'MARO 5/2/2025 12:50:22'!
+!RobotWorkingNormal class methodsFor: 'actions' stamp: 'MARO 5/2/2025 14:08:42'!
 take: aProduct with: aTrailer
 
 	 ^aTrailer carry: aProduct.! !
