@@ -5,7 +5,7 @@ TestCase subclass: #PenalesTest
 	poolDictionaries: ''
 	category: 'Penales'!
 
-!PenalesTest methodsFor: 'tests' stamp: 'NR 9/24/2023 06:41:05'!
+!PenalesTest methodsFor: 'tests' stamp: 'MARO 5/3/2025 17:31:57'!
 test01DelanteroNoPuedeApuntarHaciaAfueraDelPaloIzquierdo
 	
 	| arquero delantero juegoPenales pelota |
@@ -185,7 +185,7 @@ test09DireccionesDiferentesGolDelantero
 	self assert: 2@2 equals: juegoPenales varDireccionRemateResultante
 	"varXXXX es por VAR, de 'Video Assistant Referee'"! !
 
-!PenalesTest methodsFor: 'tests' stamp: 'NR 9/24/2023 06:41:05'!
+!PenalesTest methodsFor: 'tests' stamp: 'MARO 5/3/2025 18:10:28'!
 test10MismasDireccionesInsuficienteFuerzaGolDelantero
 	
 	| arquero delantero juegoPenales pelota |
@@ -223,7 +223,7 @@ test11MismasDireccionesSuficienteFuerzaAtajaArquero
 	self assert: 1 equals: juegoPenales puntajeDeArquero.
 	self assert: 2@2 equals: juegoPenales varDireccionRemateResultante! !
 
-!PenalesTest methodsFor: 'tests' stamp: 'NR 9/24/2023 06:42:08'!
+!PenalesTest methodsFor: 'tests' stamp: 'MARO 5/3/2025 19:21:29'!
 test12DelanteroQueTiraAColocarPierde50PorcFuerza
 	
 	| arquero delantero juegoPenales pelota |
@@ -289,7 +289,7 @@ test14FuerzaInsuficienteDeArqueroQueEligeAntesDeTiroVsJabulaniAColocar
 	self assert: 50 equals: juegoPenales varFuerzaResultanteDeTiro.
 	self assert: 48 equals: juegoPenales varFuerzaResultanteDeAtajada.! !
 
-!PenalesTest methodsFor: 'tests' stamp: 'NR 9/24/2023 06:41:05'!
+!PenalesTest methodsFor: 'tests' stamp: 'MARO 5/3/2025 19:06:10'!
 test15ArqueroQueEsperaPorTiroYSeAdelantaVsJabulaniAColocarIgnoraAlturaTiro
 	
 	| arquero delantero juegoPenales pelota |
@@ -297,7 +297,6 @@ test15ArqueroQueEsperaPorTiroYSeAdelantaVsJabulaniAColocarIgnoraAlturaTiro
 	"La fuerza del Delantero se reduce en 50% siempre que tira a colocar... (no importa pelota, ni arquero)"
 	"El Arquero que espera y se adelanta ante un tiro de jabulani a colocar ignora la 2da coordenada (altura) al atajar..."	
 	"(al adelanterse encara la pelota antes de que su elevación se transforme en un problema)"
-	
 	delantero := Delantero decideTirarAColocarSuFuerzaBaseEs: 100.
 	pelota := Pelota jabulaniSudafricanaRapida.
 	arquero := Arquero  esperaPorTiroYSeAdelantaSuFuerzaBaseEs: 50.
@@ -332,7 +331,7 @@ test16PelotaPlayeraUsadaAColocarLeHacePerder20PorcFuerzaExtraAlDelantero
 	self assert: 1@2 equals: juegoPenales varDireccionRemateResultante.
 	self assert: 40 equals: juegoPenales varFuerzaResultanteDeTiro! !
 
-!PenalesTest methodsFor: 'tests' stamp: 'NR 9/24/2023 06:42:34'!
+!PenalesTest methodsFor: 'tests' stamp: 'MARO 5/3/2025 19:46:50'!
 test17ArqueroQueEligeAntesDeTiroVsPlayeraAColocarSuma100PorcFuerzaExtra
 	
 	| arquero delantero juegoPenales pelota |
@@ -399,7 +398,7 @@ test19ArqueroQueEsperaPorTiroYSeAdelantaVsPlayeraAColocarEsDescubiertoYPuntoPara
 	self assert: 0 equals: juegoPenales puntajeDeArquero.
 	self assert: 0@0 equals: juegoPenales varDireccionRemateResultante! !
 
-!PenalesTest methodsFor: 'tests' stamp: 'NR 9/24/2023 06:34:52'!
+!PenalesTest methodsFor: 'tests' stamp: 'MARO 5/3/2025 20:12:43'!
 test20DelanteroTiraAMatarAlAnguloInferiorIzquierdoLaAlturaDelTiroPasaAMedio
 	
 	| arquero delantero juegoPenales pelota |
@@ -682,7 +681,7 @@ test33ArqueroQueEligeAntesDeTiroVsPlayeraAMatarNoAlAnguloIgnoraAnchoTiro
 	self assert: 1 equals: juegoPenales puntajeDeArquero.
 	self assert: 1@2 equals: juegoPenales varDireccionRemateResultante! !
 
-!PenalesTest methodsFor: 'tests' stamp: 'NR 9/24/2023 06:41:05'!
+!PenalesTest methodsFor: 'tests' stamp: 'MARO 5/3/2025 20:40:38'!
 test34ArqueroQueEsperaPorTiroYSeAdelantaVsPlayeraAMatarSiempreAtaja
 	
 	| arquero delantero juegoPenales pelota |
@@ -705,40 +704,220 @@ test34ArqueroQueEsperaPorTiroYSeAdelantaVsPlayeraAMatarSiempreAtaja
 
 !classDefinition: #Arquero category: #Penales!
 Object subclass: #Arquero
-	instanceVariableNames: ''
+	instanceVariableNames: 'fuerzaBase estrategia'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Penales'!
+
+!Arquero methodsFor: 'initialization' stamp: 'MARO 5/3/2025 19:14:29'!
+conEstrategia: unaEstrategia yFuerzaBase: suFuerza
+	estrategia := unaEstrategia.
+	fuerzaBase := suFuerza.! !
+
+
+!Arquero methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 19:54:50'!
+calcularFuerzaCon: unaPelota contra: estrategiaDelantero
+	|mult|
+	mult := 1.
+	(estrategia = #ElegirAntes and: [estrategiaDelantero = #Colocar]) ifTrue: [
+		(unaPelota tipo = #Playera) ifTrue: [mult := mult * 2]. "test17"
+		(unaPelota tipo = #Jabulani) ifTrue: [mult := mult * 1.5] "test13"
+	].
+	^fuerzaBase * mult.! !
+
+!Arquero methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 18:20:45'!
+estrategia
+	^estrategia ! !
+
+!Arquero methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 19:14:20'!
+fuerzaBase
+	^fuerzaBase.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Arquero class' category: #Penales!
+Arquero class
+	instanceVariableNames: ''!
+
+!Arquero class methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 19:07:20'!
+eligeDireccionAntesDeTiroSuFuerzaBaseEs: suFuerzaBase
+	^self new conEstrategia: #ElegirAntes yFuerzaBase: suFuerzaBase.! !
+
+!Arquero class methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 19:06:55'!
+esperaPorTiroYSeAdelantaSuFuerzaBaseEs: suFuerzaBase
+	^self new conEstrategia: #Esperar yFuerzaBase: suFuerzaBase.! !
 
 
 !classDefinition: #Delantero category: #Penales!
 Object subclass: #Delantero
-	instanceVariableNames: ''
+	instanceVariableNames: 'fuerzaBase estrategia'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Penales'!
+
+!Delantero methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 20:17:57'!
+calcularFuerzaCon: unaPelota
+	|mult|
+	mult := 1.
+	(estrategia = #Colocar) ifTrue: [
+		mult := mult * 0.5. "test12"
+		(unaPelota tipo = #Playera) ifTrue: [mult := mult * 0.8]. "test16"
+	].
+	(estrategia = #Matar) ifTrue: [
+		(unaPelota tipo = #Jabulani) ifTrue: [mult := mult * 1.2]. "test26"
+	].
+	^fuerzaBase * mult.! !
+
+!Delantero methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 19:44:45'!
+conEstrategia: unaEstrategia conFuerzaBase: suFuerza
+	estrategia := unaEstrategia.
+	fuerzaBase := suFuerza.! !
+
+!Delantero methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 19:44:17'!
+estrategia
+	^estrategia.! !
+
+!Delantero methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 19:14:12'!
+fuerzaBase
+	^fuerzaBase.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Delantero class' category: #Penales!
+Delantero class
+	instanceVariableNames: ''!
+
+!Delantero class methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 19:44:45'!
+decideTirarAColocarSuFuerzaBaseEs: suFuerzaBase
+	^self new conEstrategia: #Colocar conFuerzaBase: suFuerzaBase.! !
+
+!Delantero class methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 20:06:10'!
+decideTirarAMatarSuFuerzaBaseEs: suFuerzaBase
+	^self new conEstrategia: #Matar conFuerzaBase: suFuerzaBase.! !
 
 
 !classDefinition: #Pelota category: #Penales!
 Object subclass: #Pelota
-	instanceVariableNames: ''
+	instanceVariableNames: 'tipo'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Penales'!
 
+!Pelota methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 17:42:50'!
+conTipo: unTipo
+	tipo := unTipo.
+	! !
+
+!Pelota methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 18:23:07'!
+tipo
+	^tipo.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Pelota class' category: #Penales!
+Pelota class
+	instanceVariableNames: ''!
+
+!Pelota class methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 18:33:14'!
+jabulaniSudafricanaRapida
+	^self new conTipo: #Jabulani.! !
+
+!Pelota class methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 18:37:41'!
+playeraLentaCostaAzul
+	^self new conTipo: #Playera.! !
+
 
 !classDefinition: #Penales category: #Penales!
 Object subclass: #Penales
-	instanceVariableNames: ''
+	instanceVariableNames: 'delantero arquero puntajeDelantero puntajeArquero direccionPelota fuerzaDelantero fuerzaArquero'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Penales'!
+
+!Penales methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 20:40:31'!
+arbitroPitaConPelota: unaPelota delanteroRemataAlArcoConDireccion: direccionDelantero arqueroSeLanzaEnDirección: direccionArquero
+	
+	(direccionDelantero between: 0@0 and: 2@2) ifFalse: [self error: self class direccionTiroFueraDeRango ].
+	(direccionArquero between: 0@0 and: 2@2) ifFalse: [self error: self class direccionArqueroFueraDeRango ].
+	
+	fuerzaDelantero := delantero calcularFuerzaCon: unaPelota.
+	fuerzaArquero := arquero calcularFuerzaCon: unaPelota contra: delantero estrategia.
+	direccionPelota := direccionDelantero.
+	
+	(delantero estrategia = #Matar) ifTrue: [
+		(self esAngulo: direccionDelantero) 
+			ifTrue: [direccionPelota := (direccionDelantero x)@1] "test20"
+			ifFalse: [(unaPelota tipo = #Playera) ifTrue: [ "test30"
+			direccionPelota := (direccionDelantero x)@(direccionDelantero y + 2).
+			(direccionPelota between: 0@0 and: 2@2) ifFalse: [self atajaArqueroSi: true. ^self].
+			]].
+	].
+	(arquero estrategia = #Esperar) ifTrue: [
+		(unaPelota tipo = #Jabulani) ifTrue: [
+			(delantero estrategia = #Colocar) ifTrue: [self atajaArqueroSi: (direccionPelota x = direccionArquero x). ^self]. "test15"
+			(delantero estrategia = #Matar) ifTrue: [self atajaArqueroSi: false. ^self]. "test29"
+		]. 
+		(unaPelota tipo = #Playera) ifTrue: [
+			(delantero estrategia = #Colocar) ifTrue: [self atajaArqueroSi: false. ^self]. "test19"
+			(delantero estrategia = #Matar) ifTrue: [puntajeArquero := puntajeArquero + 1. ^self]. "test34"
+		].
+	].
+	
+	(arquero estrategia = #ElegirAntes) ifTrue: [
+		(unaPelota tipo = #Jabulani) ifTrue: [self atajaArqueroSi: (direccionPelota x = direccionArquero x). ^self]. "test28"
+		(unaPelota tipo = #Playera) ifTrue: [self atajaArqueroSi: (direccionPelota y = direccionArquero y). ^self]. "test32"
+		].
+	
+	self atajaArqueroSi: (direccionPelota = direccionArquero).! !
+
+!Penales methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 19:15:29'!
+atajaArqueroSi: unValorDeVerdad
+	(unValorDeVerdad and: [fuerzaArquero >= fuerzaDelantero]) 
+		ifTrue: [puntajeArquero := puntajeArquero + 1]
+		ifFalse: [puntajeDelantero := puntajeDelantero + 1]! !
+
+!Penales methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 20:11:36'!
+esAngulo: unaDireccion
+	|angulos|
+	angulos := OrderedCollection with: 0@0 with: 0@2 with: 2@0 with: 2@2.
+	^angulos includes: unaDireccion.! !
+
+!Penales methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 17:55:40'!
+inicializarConDelantero: unDelantero yArquero: unArquero
+	delantero := unDelantero.
+	arquero := unArquero.
+	puntajeDelantero := 0.
+	puntajeArquero := 0.! !
+
+!Penales methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 17:54:25'!
+puntajeDeArquero
+	^puntajeArquero! !
+
+!Penales methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 17:54:16'!
+puntajeDeDelantero
+	^puntajeDelantero! !
+
+!Penales methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 20:04:42'!
+varDireccionRemateResultante
+	^direccionPelota.! !
+
+!Penales methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 19:20:37'!
+varFuerzaResultanteDeAtajada
+	^fuerzaArquero.! !
+
+!Penales methodsFor: 'as yet unclassified' stamp: 'MARO 5/3/2025 19:20:33'!
+varFuerzaResultanteDeTiro
+	^fuerzaDelantero.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'Penales class' category: #Penales!
 Penales class
 	instanceVariableNames: ''!
+
+!Penales class methodsFor: 'message errors' stamp: 'MARO 5/3/2025 17:47:13'!
+conDelantero: unDelantero yArquero: unArquero
+	^self new inicializarConDelantero: unDelantero yArquero: unArquero.! !
 
 !Penales class methodsFor: 'message errors' stamp: 'NR 9/19/2023 06:12:49'!
 direccionArqueroFueraDeRango
